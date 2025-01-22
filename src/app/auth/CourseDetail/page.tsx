@@ -1,6 +1,6 @@
 "use client"
 
-import { useSearchParams } from 'next/navigation'
+import {useRouter, useSearchParams} from 'next/navigation'
 import {useEffect, useState} from "react";
 import { CourseCard } from "@/app/auth/CourseDetail/components/courseCard"
 import {Course, CourseTopic} from "@/app/types/course";
@@ -10,9 +10,13 @@ import {courses} from "@/app/auth/CoursesPage/data/courses";
 export default function CourseDetail() {
     const searchParams = useSearchParams();
     const courseQuery = searchParams.get('course');
+    const router = useRouter();
 
     const [course, setCourse] = useState<Course>();
     const [topics, setTopics] = useState<CourseTopic[]>([]);
+    const onClick = (courseId : string) => {
+        router.push(`/auth/Topics`);
+    }
 
     const getCourse = async (courseId: string) => {
         return courses.find((course) => course.id === courseId);
@@ -53,7 +57,7 @@ export default function CourseDetail() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {topics.map((card, index) => (
-                        <CourseCard key={index} data={card} />
+                        <CourseCard key={index} data={card} onClick={onClick}/>
                     ))}
                 </div>
             </div>

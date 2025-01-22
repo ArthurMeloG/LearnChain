@@ -2,7 +2,7 @@
 import Link from "next/link"
 import { Input } from "@/components/ui/input"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-import { Search } from "lucide-react"
+import {Plus, Search} from "lucide-react"
 import {Button} from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
@@ -24,6 +24,10 @@ export function Navbar() {
         context.handleSave();
     }
 
+    const createCourse = () => {
+        context.createCourse()
+    }
+
     const goTocreatePage = () => {
         router.push("/auth/CreateMaterial");
     };
@@ -37,7 +41,7 @@ export function Navbar() {
                 <div className="flex h-16 items-center justify-between">
                     <div className="flex items-center gap-8">
                         {/* Logo */}
-                        <Link href="/" className="text-xl font-bold text-white">
+                        <Link href="/auth/CoursesPage" className="text-xl font-bold text-white">
                             LN
                         </Link>
 
@@ -75,7 +79,7 @@ export function Navbar() {
                     </div>
                     <div>
                         {isInCoursesPage && <Button size={"lg"} variant="ghost" className={"bg-blueWhite font-bold"} onClick={goTocreatePage}>Criar Material</Button> }
-                        {isInCreateMaterial && <Button size={"lg"} variant="ghost" className={"bg-blueWhite font-bold"} onClick={saveData}>Salvar Conteúdo</Button> }
+                        {isInCreateMaterial && <Button size={"lg"} variant="ghost" className={"bg-blueWhite font-bold"} onClick={createCourse}><Plus className="mr-2 h-4 w-4" />Criar Curso</Button> }
                     </div>
                 </div>
             </div>

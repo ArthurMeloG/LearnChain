@@ -4,11 +4,12 @@ import { CourseTopic as CourseCardType} from "@/app/types/course"
 
 interface CourseCardProps {
     data: CourseCardType
+    onClick: () => void;
 }
 
-export function CourseCard({ data }: CourseCardProps) {
+export function CourseCard({ data , onClick}: CourseCardProps) {
     return (
-        <div className="border border-indigo-900/50 rounded-lg p-6 bg-zinc-900/50 hover:bg-zinc-800/50 transition-colors flex flex-col h-full">
+        <div className="border border-indigo-900/50 rounded-lg p-6 bg-zinc-900/50 hover:bg-zinc-800/50 transition-colors flex flex-col h-full" onClick={onClick}>
             <div className="flex-grow">
                 <h2 className="text-xl font-bold mb-2">{data.title}</h2>
                 <p className="text-zinc-400 text-sm mb-2">{data.subtitle}</p>
