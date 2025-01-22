@@ -22,7 +22,6 @@ export default function LoginPageView({ login }: Props) {
 
         try {
             await login(email, password);
-            console.log("De volta")
         } finally {
             setLoading(false);
         }

@@ -1,6 +1,6 @@
 "use client"
 import { CourseCard } from "@/components/custom/CourseCard"
-import {courses} from "@/app/auth/CoursesPage/data/courses";
+import {courses} from "@/data/courses";
 import { useRouter } from "next/navigation";
 
 export default function CoursesPage() {

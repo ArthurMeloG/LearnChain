@@ -15,6 +15,7 @@ interface GlobalContextType {
 }
 
 interface User {
+    tag: string;
     name: string;
     email: string;
 }

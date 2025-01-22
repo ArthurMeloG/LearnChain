@@ -1,15 +1,11 @@
 "use client"
 
 import { useState } from "react"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import CreateCourse from "./CreateCourse"
 import {useGlobalContext} from "@/context/GlobalContext";
 
-interface CreateCourseModalProps {
-    children: React.ReactNode
-}
-
-export function CreateCourseModal({ children }: CreateCourseModalProps) {
+export function CreateCourseModal() {
     const {openCreateCourse, setOpenCreateCourse} = useGlobalContext();
 
     return (
@@ -18,7 +14,7 @@ export function CreateCourseModal({ children }: CreateCourseModalProps) {
         <DialogHeader>
             <DialogTitle>Criar Novo Curso</DialogTitle>
         </DialogHeader>
-        <CreateCourse onSuccess={() => setOpen(false)} />
+        <CreateCourse onSuccess={() => setOpenCreateCourse(false)} />
         </DialogContent>
     </Dialog>
 )

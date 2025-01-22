@@ -6,7 +6,7 @@ export const courses : Course[] = [
         title: "Clean Code",
         subtitle: "Escreva código limpo e sustentável",
         description: "Aprenda os princípios do Clean Code para escrever código mais legível, manutenível e escalável. Este curso aborda as melhores práticas para desenvolvimento de software de alta qualidade.",
-        author: "#CodeMaster",
+        author: "#ArthurMelo",
         date: "25/01/2025",
         duration: "40 h",
         views: "30k Views"
@@ -17,7 +17,7 @@ export const courses : Course[] = [
         subtitle: "Estudos aprofundados sobre matemática avançada",
         description:
             "Aprenda os conceitos essenciais da matemática de forma prática e intuitiva! Ideal para estudantes e profissionais que querem dominar cálculos, lógica e resolução de problemas. Transforme seu conhecimento agora.",
-        author: "#MathPro",
+        author: "#ArthurMelo",
         date: "19/01/2025",
         duration: "200 h",
         views: "50k Views",
@@ -28,7 +28,7 @@ export const courses : Course[] = [
         subtitle: "Aprenda a gerir o próprio dinheiro",
         description:
             "Descubra como organizar suas finanças, economizar de forma inteligente e fazer seu dinheiro render mais! Dê o primeiro passo para a sua independência financeira",
-        author: "#Luke42",
+        author: "#ArthurMelo",
         date: "20/12/2024",
         duration: "60 min",
         views: "35k Views",

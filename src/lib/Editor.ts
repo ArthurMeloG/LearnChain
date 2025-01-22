@@ -1,33 +1,33 @@
-import EditorJS from '@editorjs/editorjs';
-import Header from '@editorjs/header';
-import SimpleImage from "@editorjs/simple-image";
-import LinkTool from '@editorjs/link';
-import RawTool from '@editorjs/raw';
-import List from '@editorjs/list';
-import Embed from '@editorjs/embed';
-import Quote from '@editorjs/quote';
+import EditorJS from "@editorjs/editorjs";
 
-const editor = new EditorJS({
-    tools: {
-        header: Header,
-        linkTool: {
-            class: LinkTool,
-            config: {
-                endpoint: 'http://localhost:8008/fetchUrl', // Your backend endpoint for url data fetching,
+class Editor {
+
+    private editor: any;
+    private header: any;
+    private list: any;
+    private table: any;
+    private data: any
+
+    private async getImports(): Promise<void> {
+        this.editor = new (await import("@editorjs/editorjs")).default;
+        this.header = (await import("@editorjs/header")).default;
+        this.table = (await import("@editorjs/table")).default;
+        this.list = (await import("@editorjs/list")).default;
+
+        this.editor = new EditorJS({
+            holder: "editorjs",
+            tools: {
+                header: this.header,
+                list: this.list,
+                table: this.table,
             }
-        },
-        raw: RawTool,
-        image: SimpleImage,
-        list: {
-            class: List,
-            inlineToolbar: true,
-            config: {
-                defaultStyle: 'unordered'
-            },
-        },
-        embed: Embed,
-        quote: Quote,
-    },
-});
+        })
+    }
 
-export default editor;
+    constructor() {
+        this.getImports().then(r => r);
+    }
+
+}
+
+export default Editor;

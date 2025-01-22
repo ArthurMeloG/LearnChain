@@ -25,9 +25,10 @@ body {
     --color-light-blue:    #009FFD;
     --color-strong-blue:   #2A2A72;
     --color-dark-blue:     #232528;
-    --color-white:         #EAF6FF;
+    --color-light-white:   #EAF6FF;
     --color-red:           #FB4B4E;
     --color-blue-white:    #B1CDE2;
+    --color-white: #FFFF;
 
     --background: 0 0% 100%;
     --foreground: 0 0% 3.9%;

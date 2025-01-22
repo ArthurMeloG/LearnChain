@@ -1,9 +1,9 @@
 import { Plus } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { CourseList } from "./component/CourseList"
-import { CreateCourseModal } from "./component/CreateCourseModal"
+import { CourseList } from "./CourseList"
+import { CreateCourseModal } from "./CreateCourseModal"
 
-export default function CoursesPage() {
+export default function CreateMaterialView({coursesList}) {
     return (
         <div className="container py-8 min-h-screen text-white">
             <div className="flex justify-between items-center mb-8">
@@ -11,12 +11,7 @@ export default function CoursesPage() {
                     <h2 className="text-2xl font-bold tracking-tight">Área de Criar Material</h2>
                     <p className="text-muted-foreground">Gerencie seus cursos e crie novos conteúdos</p>
                 </div>
-                <CreateCourseModal>
-                    <Button>
-                        <Plus className="mr-2 h-4 w-4" />
-                        Criar Curso
-                    </Button>
-                </CreateCourseModal>
+                <CreateCourseModal/>
             </div>
             <CourseList />
         </div>

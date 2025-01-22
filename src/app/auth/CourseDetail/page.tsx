@@ -4,16 +4,20 @@ import {useRouter, useSearchParams} from 'next/navigation'
 import {useEffect, useState} from "react";
 import { CourseCard } from "@/app/auth/CourseDetail/components/courseCard"
 import {Course, CourseTopic} from "@/app/types/course";
-import { courseTopics } from "./data/courseTopics"
-import {courses} from "@/app/auth/CoursesPage/data/courses";
+import { courseTopics } from "../../../data/courseTopics"
+import {courses} from "@/data/courses";
+import {useGlobalContext} from "@/context/GlobalContext";
 
 export default function CourseDetail() {
     const searchParams = useSearchParams();
     const courseQuery = searchParams.get('course');
     const router = useRouter();
-
+    const {user} = useGlobalContext();
     const [course, setCourse] = useState<Course>();
     const [topics, setTopics] = useState<CourseTopic[]>([]);
+
+    const editMode = course?.author == user?.tag;
+
     const onClick = (courseId : string) => {
         router.push(`/auth/Topics`);
     }
@@ -57,7 +61,7 @@ export default function CourseDetail() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {topics.map((card, index) => (
-                        <CourseCard key={index} data={card} onClick={onClick}/>
+                        <CourseCard key={index} data={card} onClick={onClick} editMode={editMode}/>
                     ))}
                 </div>
             </div>

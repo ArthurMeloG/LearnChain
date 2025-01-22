@@ -1,17 +1,22 @@
 "use client"
-import { Clock, Calendar, Eye, User } from "lucide-react"
+import { Clock, Calendar, Eye, User, Edit } from "lucide-react"
 import { CourseTopic as CourseCardType} from "@/app/types/course"
+import { Button } from "@/components/ui/button";
 
 interface CourseCardProps {
     data: CourseCardType
     onClick: () => void;
+    editMode: boolean;
 }
 
-export function CourseCard({ data , onClick}: CourseCardProps) {
+export function CourseCard({ data , onClick, editMode}: CourseCardProps) {
     return (
         <div className="border border-indigo-900/50 rounded-lg p-6 bg-zinc-900/50 hover:bg-zinc-800/50 transition-colors flex flex-col h-full" onClick={onClick}>
             <div className="flex-grow">
-                <h2 className="text-xl font-bold mb-2">{data.title}</h2>
+                <div className={"flex justify-between items-center"}>
+                    <h2 className="text-xl font-bold mb-2">{data.title}</h2>
+                    {editMode && <Button><Edit/> Editar</Button>}
+                </div>
                 <p className="text-zinc-400 text-sm mb-2">{data.subtitle}</p>
                 <p className="text-zinc-500 text-sm">{data.description}</p>
             </div>

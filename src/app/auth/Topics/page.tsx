@@ -3,13 +3,13 @@ import { TopicsTable } from "./components/TopicsTable"
 
 export default function TopicsPage() {
     return (
-        <div className="container min-h-screen">
+        <div className="container min-h-screen text-white">
             <div className="space-y-4">
-                <div>
-                    <h1 className="text-3xl font-bold tracking-tight">Clean Code</h1>
-                    <p className="text-muted-foreground">3 Tópicos | 3H</p>
-                </div>
-                <TopicsTable />
+                <header className="mb-8">
+                    <h1 className="text-4xl font-bold mb-2">Clean Code</h1>
+                    <p className="text-zinc-400">Tópicos | H</p>
+                </header>
+                <TopicsTable/>
             </div>
         </div>
     )
