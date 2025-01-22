@@ -48,8 +48,8 @@ export default function CourseDetail() {
 
 
     return (
-        <div className="min-h-screen bg-zinc-900 text-white p-6">
-            <div className="max-w-7xl mx-auto">
+        <div className="min-h-screen bg-darkBlue text-white">
+            <div className=" mx-auto">
                 <header className="mb-8">
                     <h1 className="text-4xl font-bold mb-2">{course?.title}</h1>
                     <p className="text-zinc-400">{amountOfTopics} Tópicos | {hoursOfCourse}H</p>
