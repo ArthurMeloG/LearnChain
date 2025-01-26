@@ -21,3 +21,11 @@ export interface Course {
     views: string
 }
 
+export interface CourseContent {
+    id: string;
+    title: string;
+    description: string;
+    createdAt: string;
+    topicId: string;
+}
+

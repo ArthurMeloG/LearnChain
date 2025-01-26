@@ -2,25 +2,35 @@
 
 import {CourseCard} from "@/components/custom/CourseCard";
 import {useRouter} from "next/navigation";
-import {courses} from "@/data/courses";
 import {useGlobalContext} from "@/context/GlobalContext";
+import {useEffect, useState} from "react";
+import Api from "@/api/Api";
+import {Course} from "@/types/course";
 
 
 export function CourseList() {
     const { user } = useGlobalContext();
-    console.log(user);
     const router = useRouter();
+    const [courses, setCourses] = useState<Course[]>([]);
     const onClick = (courseId : string) => {
-        router.push(`/auth/CourseDetail?course=${courseId}`);
+        router.push(`/auth/CourseDetailForm?course=${courseId}`);
     }
 
-    const myCourses = courses?.filter(course => course.author == user?.tag) ;
+    useEffect(() => {
+        async function getCourses() {
+            if(user) {
+                const response = await Api.course.getCoursesByUserId(user.id);
+                setCourses(response)
+            }
+        }
+        getCourses()
+    }, [user]);
 
     return (
         <div className="min-h-screen bg-darkBlue">
             <main className="container py-8 max-w-full">
                 <div className="grid gap-4">
-                    {myCourses?.map((course) => (
+                    {courses?.map((course) => (
                         <CourseCard key={course.title} {...course} onClick={() => onClick(course.id)}/>
                     ))}
                 </div>

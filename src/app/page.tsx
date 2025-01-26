@@ -5,21 +5,15 @@ import {useGlobalContext} from "@/context/GlobalContext";
 
 export default function LoginPage() {
   const router = useRouter();
-  const {user, setUser} = useGlobalContext();
+  const {loginUser} = useGlobalContext();
 
   const login = async (email: string, password: string) => {
+
+
     try {
-      console.log("LoginPageView", email, password);
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      if (email === "admin@gmail.com" && password === "123456") {
-        setUser({
-          email: "admin@gmail.com",
-          name: "Admin",
-          tag: "#ArthurMelo"
-        });
+      const response = await loginUser(email, password);
+      if(response) {
         router.push("/auth/CoursesPage");
-      } else {
-        console.log("Credenciais inválidas");
       }
     } catch (error) {
       console.error("Erro ao realizar login:", error);

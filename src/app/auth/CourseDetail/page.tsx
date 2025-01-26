@@ -2,32 +2,40 @@
 
 import {useRouter, useSearchParams} from 'next/navigation'
 import {useEffect, useState} from "react";
-import { CourseCard } from "@/app/auth/CourseDetail/components/courseCard"
-import {Course, CourseTopic} from "@/app/types/course";
-import { courseTopics } from "../../../data/courseTopics"
-import {courses} from "@/data/courses";
+import { CourseDetailCard } from "@/app/auth/CourseDetail/components/CourseDetailCard"
 import {useGlobalContext} from "@/context/GlobalContext";
+import {Course, CourseTopic} from "@/types/course";
+import Api from "@/api/Api";
 
 export default function CourseDetail() {
-    const searchParams = useSearchParams();
-    const courseQuery = searchParams.get('course');
     const router = useRouter();
-    const {user} = useGlobalContext();
-    const [course, setCourse] = useState<Course>();
+    const { editMode } = useGlobalContext();
     const [topics, setTopics] = useState<CourseTopic[]>([]);
-
-    const editMode = course?.author == user?.tag;
-
-    const onClick = (courseId : string) => {
-        router.push(`/auth/Topics`);
+    
+    const searchParams = useSearchParams();
+    const [course, setCourse] = useState<Course | null>(null);
+    const courseQuery = searchParams.get('course');
+    
+    const onClick = (topic: CourseTopic) => {
+        router.push(`/auth/Content?topic=${topic?.id}`);
     }
 
     const getCourse = async (courseId: string) => {
-        return courses.find((course) => course.id === courseId);
+        return await Api.course.fetchCourseById(courseId) as Promise<Course>;
     }
-
+    
     const getTopics = async (courseId : string) => {
-        return courseTopics.filter((topic) => topic.courseId === courseId);
+        const courseTopics = await Api.topic.fetchTopics();
+        const result: CourseTopic[] = [];
+        let elem: CourseTopic;
+        courseTopics
+            .filter((topic) => topic.course.id === courseId)
+            .forEach((topic) => {
+                elem = topic as CourseTopic;
+                elem.courseId = topic.course.id;
+                result.push(elem);
+            });
+        return result;
     }
 
     const amountOfTopics = topics.length;
@@ -35,21 +43,21 @@ export default function CourseDetail() {
     const hoursOfCourse = topics.length
 
     useEffect(() => {
-        if (courseQuery) {
-            console.log(courseQuery);
-            const courseId = courseQuery as string; // Garantir que courseId é uma string
-            async function fetchData() {
-                const courseData = await getCourse(courseId);
-                if (courseData) {
-                    setCourse(courseData);
-                    const topicsData = await getTopics(courseData.id);
-                    setTopics(topicsData);
-                }
+        async function fetchData() {
+            if (courseQuery) {
+                const courseId = courseQuery as string;
+                    const courseData = await getCourse(courseId);
+                    if (courseData) {
+                        setCourse(courseData);
+                    }
+                    if(courseData.id) {
+                        const topicsData = await getTopics(courseData.id);
+                        setTopics(topicsData);
+                    }
             }
-            fetchData();
         }
+        fetchData();
     }, [courseQuery]);
-
 
     return (
         <div className="min-h-screen bg-darkBlue text-white">
@@ -60,8 +68,8 @@ export default function CourseDetail() {
                 </header>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {topics.map((card, index) => (
-                        <CourseCard key={index} data={card} onClick={onClick} editMode={editMode}/>
+                    {topics.map((topic) => (
+                        <CourseDetailCard key={topic.id} data={topic} onClick={() => onClick(topic)} editMode={editMode}/>
                     ))}
                 </div>
             </div>

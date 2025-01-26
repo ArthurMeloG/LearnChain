@@ -1,33 +1,51 @@
 import EditorJS from "@editorjs/editorjs";
+import {CourseContent, CourseTopic} from "@/types/course";
+import Api from "@/api/Api";
 
-class Editor {
+export  class Editor {
 
-    private editor: any;
-    private header: any;
-    private list: any;
-    private table: any;
-    private data: any
+    private readonly editor: EditorJS;
+    private content: CourseContent;
+    private topic: CourseTopic;
 
-    private async getImports(): Promise<void> {
-        this.editor = new (await import("@editorjs/editorjs")).default;
-        this.header = (await import("@editorjs/header")).default;
-        this.table = (await import("@editorjs/table")).default;
-        this.list = (await import("@editorjs/list")).default;
+    public constructor(editor: EditorJS, content: CourseContent, topic: CourseTopic) {
+        this.editor = editor;
+        this.content = content;
+        this.topic = topic;
+    }
 
-        this.editor = new EditorJS({
-            holder: "editorjs",
-            tools: {
-                header: this.header,
-                list: this.list,
-                table: this.table,
+    public async saveContent() {
+        try {
+            const contentData = await this.editor.save();
+            const newContent = {
+                topic: this.topic.id,
+                content: this.content.id,
+                data: contentData,
+            };
+
+            const content = await Api.contentData.fetchContentDataById(this.content.id);
+
+            if(content.id) {
+                console.log("UPDATE");
+                await Api.contentData.updateContentData(this.content.id, newContent);
             }
-        })
+            else {
+                console.log("INSERT");
+                const response = await Api.contentData.createContentData(newContent);
+                console.log(response);
+            }
+
+        } catch (e) {
+            console.error("Erro ao salvar conteúdo:", e);
+        }
     }
 
-    constructor() {
-        this.getImports().then(r => r);
+    public async getContent () {
+        try {
+            return await Api.contentData.fetchContentDataById(this.content.id);
+        } catch (error) {
+            console.error("Erro ao buscar conteúdo:", error);
+            return null;
+        }
     }
-
 }
-
-export default Editor;
